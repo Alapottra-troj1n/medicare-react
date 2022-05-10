@@ -4,7 +4,7 @@ import chair from '../../assets/images/chair.png'
 const Banner = () => {
     return (
         <div>
-            <div className="hero min-h-screen">
+            <div className="hero my-40 lg:my-60">
                 <div className="hero-content flex-col lg:flex-row-reverse">
                     <img src={chair} alt='chair' className="max-w-xl rounded-lg shadow-2xl" />
                     <div className="pr-8">

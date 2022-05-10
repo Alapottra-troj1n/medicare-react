@@ -1,12 +1,16 @@
 import React from 'react';
+import Appointment from './Appointment';
 import Banner from './Banner';
 import InfoContainer from './InfoContainer';
+import ServicesContainer from './ServicesContainer';
 
 const Home = () => {
     return (
-        <div className="container mx-auto">
+        <div>
             <Banner/>
             <InfoContainer/>
+            <ServicesContainer/>
+            <Appointment/>
         </div>
     );
 };
