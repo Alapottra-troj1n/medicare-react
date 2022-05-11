@@ -22,7 +22,7 @@ const InfoContainer = () => {
     }
 
     return (
-        <div className='grid grid-cols-3 gap-5 my-10 container mx-auto'>
+        <div className='grid grid-cols-1 lg:grid-cols-3 gap-5 my-10 container mx-auto'>
             <InfoCard infoCard={infoCardOne} ></InfoCard>
             <InfoCard infoCard={infoCardTwo} difference={true} ></InfoCard>
             <InfoCard infoCard={infoCardThree} ></InfoCard>

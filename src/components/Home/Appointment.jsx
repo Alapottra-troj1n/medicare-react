@@ -5,8 +5,8 @@ import appointment from '../../assets/images/appointment.png'
 const Appointment = () => {
     return (
         <div className="my-40" style={{ background: `url(${appointment})` }}>
-            <div className="flex justify-center items-center container mx-auto">
-                <div className="flex-1">
+            <div className="flex justify-center items-center container mx-auto py-16 lg:p-0">
+                <div className="flex-1 hidden lg:flex">
                     <img className="mt-[-200px]" src={doctor} alt="" />
                 </div>
                 <div className="flex-1">
