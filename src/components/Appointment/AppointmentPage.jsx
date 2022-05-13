@@ -10,11 +10,12 @@ const AppointmentPage = () => {
     const [date , setDate] = useState(new Date());
     const [services , setServices] = useState([]);
     const [treatment , setTreatment] = useState(null)
+
      useEffect(() => {
         
         const getServices = async() =>{
 
-                const response = await fetch('services.json')
+                const response = await fetch('http://localhost:5000/services')
                 const data = await response.json();
                 setServices(data);
         }
@@ -25,7 +26,7 @@ const AppointmentPage = () => {
 
     return (
         <div className='container mx-auto'>
-            <TreatmentModal treatment={treatment} />
+            {treatment && <TreatmentModal date={date} treatment={treatment} />}
             <div className="hero min-h-screen">
                 <div className="hero-content flex-col lg:flex-row-reverse">
                     <img src={chair} alt="Dentist Chair" className="max-w-xl rounded-lg shadow-2xl ml-10" />
@@ -42,7 +43,7 @@ const AppointmentPage = () => {
             </div>
 
             <div className="appointmentCards">
-                 {date ?   <h4 className="text-primary text-center text-2xl font-bold my-5"> <span className="font-semibold">Appointment Available For :</span>  
+                 {date ?   <h4 className="text-primary text-center text-2xl font-bold my-5"> <span className="font-semibold">Appointment Available For : </span>  
                    
                    {format(date, 'PP')}</h4> :<h4 className="text-primary text-center text-2xl font-bold my-5">Please Pick a Date </h4> }
 
