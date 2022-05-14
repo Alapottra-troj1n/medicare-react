@@ -24,7 +24,7 @@ const TreatmentModal = ({ treatment, date }) => {
                     <label for="booking-modal" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
                     <h3 className="font-bold text-xl text-secondary text-center my-10 ">{treatment?.name}</h3>
                     <form className="flex flex-col justify-center items-center gap-3" onSubmit={handleBooking}>
-                        <input type="text" name='date' value={format(date, 'PP')} disabled class="input input-bordered input-secondary w-full max-w-xs" />
+                        <input type="text" name='date' value={format(date, 'PP')} disabled className="input input-bordered input-secondary w-full max-w-xs" />
                         <select name="slot" className="select select-bordered w-full max-w-xs">
                             {
                                 slots.map((slot, index) => <option
@@ -33,9 +33,9 @@ const TreatmentModal = ({ treatment, date }) => {
                                 >{slot}</option>)
                             }
                         </select>
-                        <input type="text" name='name' placeholder="Full Name" required class="input input-bordered w-full max-w-xs" />
-                        <input type="number" name='phone' required placeholder="Phone Number" class="input input-bordered w-full max-w-xs" />
-                        <input type="email" name='email' required placeholder="Email" class="input input-bordered w-full max-w-xs" />
+                        <input type="text" name='name' placeholder="Full Name" required className="input input-bordered w-full max-w-xs" />
+                        <input type="number" name='phone' required placeholder="Phone Number" className="input input-bordered w-full max-w-xs" />
+                        <input type="email" name='email' required placeholder="Email" className="input input-bordered w-full max-w-xs" />
                         <input type="submit" value="Submir"  className="btn"/>
 
                     </form>
