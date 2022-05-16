@@ -3,9 +3,13 @@ import auth from '../../firebase.init';
 import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
 import Loading from '../Loading/Loading';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const Login = () => {
+
+    let navigate = useNavigate();
+    let location = useLocation();
+    let from = location.state?.from?.pathname || "/";
 
     const [signInWithGoogle, googleUser, googleLoading, googleError] = useSignInWithGoogle(auth);
     const [
@@ -20,17 +24,27 @@ const Login = () => {
 
     const handleGoogleLogin = (e) => {
         e.preventDefault();
-
         signInWithGoogle()
     }
 
     const onSubmit = data => {
         signInWithEmailAndPassword(data.email, data.password);
+    
     };
 
-    if(loading || googleLoading) {
-                return <Loading/>
+    if (loading || googleLoading) {
+        return <Loading />
     }
+
+
+    if(user || googleUser) {
+        navigate(from, { replace: true });
+    }
+
+
+  
+
+ 
 
     return (
         <div className="h-screen flex justify-center items-center">
@@ -88,7 +102,7 @@ const Login = () => {
                         </div>
 
                         <input type="submit" value="Login" className="btn" />
-                        <div>New to medicare ? <Link className="text-primary"to='/signup'>Create a new account</Link> </div>
+                        <div>New to medicare ? <Link className="text-primary" to='/signup'>Create a new account</Link> </div>
 
 
 

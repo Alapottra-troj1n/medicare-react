@@ -1,14 +1,42 @@
 import React from 'react';
+import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import auth from '../../firebase.init';
+import Loading from '../Loading/Loading';
 
 const SignUp = () => {
 
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const navigate = useNavigate();
+    let location = useLocation();
+    let from = location.state?.from?.pathname || "/";
 
-   const onSubmit = (data) => {
+    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const [
+        createUserWithEmailAndPassword,
+        user,
+        loading,
+        error,
+      ] = useCreateUserWithEmailAndPassword(auth);
+      const [updateProfile, updating, updateError] = useUpdateProfile(auth);
+
+      if(loading || updating) {
+          return <Loading/>
+      }
+
+   const onSubmit = async(data) => {
        console.log(data);
+       await createUserWithEmailAndPassword(data.email,data.password);
+       await updateProfile({displayName: data.username});
+
+
    }
+   if(user ) {
+    navigate(from, { replace: true });
+}
+
+
+
     return (
         <div className="h-screen flex justify-center items-center">
         <div className="card w-96 bg-base-100 shadow-xl">
@@ -44,7 +72,7 @@ const SignUp = () => {
 
 
 
-                    {/**********Email**********************/}
+                    {/******************Email**********************/}
                     <div className="form-control w-full max-w-xs">
                         <label className="label">
                             <span className="label-text">Email</span>
@@ -83,12 +111,11 @@ const SignUp = () => {
 
                         })} />
                         <label className="label">
-
                             {errors.password?.type === 'required' && <span className="label-text-alt">{errors.password.message}</span>}
                             {errors.password?.type === 'minLength' && <span className="label-text-alt">{errors.password.message}</span>}
-                       
+                            {error || updateError ? <p className="text-red-500">{error?.message || updateError?.message}</p> : ""}
                         </label>
-                    </div>
+                        </div>
 
                     <input type="submit" value="Login" className="btn" />
                     <div>Already a member ? <Link className="text-primary"to='/login'>Login</Link> </div>
