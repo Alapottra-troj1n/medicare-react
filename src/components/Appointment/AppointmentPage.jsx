@@ -5,28 +5,28 @@ import 'react-day-picker/dist/style.css';
 import { format } from 'date-fns';
 import AppointCard from './AppointCard';
 import TreatmentModal from './TreatmentModal';
+import { useQuery } from 'react-query';
+import Loading from '../Loading/Loading';
 
 const AppointmentPage = () => {
     const [date , setDate] = useState(new Date());
-    const [services , setServices] = useState([]);
-    const [treatment , setTreatment] = useState(null)
-
-     useEffect(() => {
-        
-        const getServices = async() =>{
-
-                const response = await fetch('http://localhost:5000/services')
-                const data = await response.json();
-                setServices(data);
-        }
-        getServices();
+    const [treatment , setTreatment] = useState(null);
+    const formattedDate = format(date, 'PP' );
 
 
-    },[])
+    const { isLoading, error, data : services, refetch } = useQuery(['Appointment',formattedDate], () =>
+    fetch(`http://localhost:5000/available?date=${formattedDate}`).then(res =>
+      res.json()
+    )
+  )
+
+  if(isLoading){
+      return <Loading/>
+  }
 
     return (
         <div className='container mx-auto'>
-            {treatment && <TreatmentModal date={date} treatment={treatment} />}
+            {treatment && <TreatmentModal date={date} setTreatment={setTreatment} refetch={refetch} treatment={treatment} />}
             <div className="hero min-h-screen">
                 <div className="hero-content flex-col lg:flex-row-reverse">
                     <img src={chair} alt="Dentist Chair" className="max-w-xl rounded-lg shadow-2xl ml-10" />
@@ -34,7 +34,7 @@ const AppointmentPage = () => {
                         <DayPicker
                            mode="single"
                            selected={date}
-                           onSelect={setDate}
+                           onDayClick={setDate}
                         />
                         
                     </div>
@@ -49,7 +49,7 @@ const AppointmentPage = () => {
 
                    
                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 ">
-                   {services.map(service => <AppointCard service={service} setTreatment={setTreatment} key={service._id} />)}
+                   {services?.map(service => <AppointCard service={service} setTreatment={setTreatment} key={service._id} />)}
                    </div>
                 </div>
 

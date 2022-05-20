@@ -11,7 +11,7 @@ const AppointCard = ({ service,setTreatment }) => {
                 <div className="card-body text-center">
                     <h2 className="text-2xl font-semibold text-center text-secondary">{name}</h2>
                     <p className="text-lg font-medium">{
-                        slots.length > 0
+                        slots?.length > 0
                             ? <span>{slots[0]}</span>
                             : <span className='text-red-500'>Try another date.</span>
                     }</p>
